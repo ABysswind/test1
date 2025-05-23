@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社区讨论 - 计算机学院竞赛推荐</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- TDesign inspired styles -->
+    <style>
+        :root {
+            --td-brand-color: #0052d9;
+            --td-brand-color-light: #d4e3fc;
+            --td-bg-color-container: #fff;
+            --td-bg-color-page: #f5f5f5;
+            --td-text-color-primary: #000000;
+            --td-text-color-secondary: #666666;
+            --td-radius-default: 6px;
+        }
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: var(--td-bg-color-page);
+            color: var(--td-text-color-primary);
+        }
+        .navbar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 56px;
+            background-color: var(--td-bg-color-container);
+            display: flex;
+            box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.05);
+            z-index: 100;
+        }
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--td-text-color-secondary);
+        }
+        .nav-item.active {
+            color: var(--td-brand-color);
+        }
+        .header {
+            height: 44px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            background-color: var(--td-bg-color-container);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        .card {
+            background-color: var(--td-bg-color-container);
+            border-radius: var(--td-radius-default);
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        .tag {
+            display: inline-block;
+            background-color: var(--td-brand-color-light);
+            color: var(--td-brand-color);
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-right: 8px;
+        }
+        .search-bar {
+            background-color: var(--td-bg-color-container);
+            border-radius: var(--td-radius-default);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+        }
+        .post-item {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .post-item:last-child {
+            border-bottom: none;
+        }
+        .tab {
+            display: flex;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            background-color: var(--td-bg-color-container);
+        }
+        .tab-item {
+            flex: 1;
+            text-align: center;
+            padding: 12px 0;
+            font-size: 14px;
+        }
+        .tab-item.active {
+            color: var(--td-brand-color);
+            border-bottom: 2px solid var(--td-brand-color);
+        }
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--td-brand-color-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--td-brand-color);
+            font-weight: 600;
+        }
+        .btn-primary {
+            background-color: var(--td-brand-color);
+            color: white;
+            border-radius: var(--td-radius-default);
+            padding: 8px 16px;
+            font-size: 14px;
+            border: none;
+            text-align: center;
+        }
+        .fab {
+            position: fixed;
+            right: 20px;
+            bottom: 76px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--td-brand-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .filter-chip {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 14px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        .filter-chip.active {
+            background-color: var(--td-brand-color);
+            color: white;
+            border-color: var(--td-brand-color);
+        }
+    </style>
+</head>
+<body class="pb-16">
+    <!-- Header -->
+    <div class="header">
+        <a href="javascript:history.back()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+        </a>
+        <h1 class="text-lg font-medium mx-auto">社区讨论</h1>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+        </svg>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="p-4 pb-0">
+        <div class="search-bar mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input type="text" placeholder="搜索帖子" class="w-full outline-none bg-transparent text-sm">
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tab">
+        <div class="tab-item active">热门</div>
+        <div class="tab-item">最新</div>
+        <div class="tab-item">精华</div>
+        <div class="tab-item">我的</div>
+    </div>
+
+    <!-- Filter Chips -->
+    <div class="p-4 pb-2">
+        <div class="overflow-x-auto flex flex-wrap">
+            <span class="filter-chip active">全部</span>
+            <span class="filter-chip">竞赛经验</span>
+            <span class="filter-chip">算法讨论</span>
+            <span class="filter-chip">组队招募</span>
+            <span class="filter-chip">解题心得</span>
+        </div>
+    </div>
+
+    <div class="p-4 pt-0">
+        <!-- Posts List -->
+        <div class="card">
+            <div class="post-item">
+                <div class="flex items-start">
+                    <div class="avatar mr-3">张</div>
+                    <div class="flex-1">
+                        <div class="flex justify-between mb-1">
+                            <h3 class="font-medium">蓝桥杯备赛分享：如何在一个月内从零开始</h3>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <span class="text-xs text-gray-500">张三</span>
+                            <span class="mx-1 text-gray-300">|</span>
+                            <span class="text-xs text-gray-500">计科2001</span>
+                            <span class="tag ml-2">竞赛经验</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3 line-clamp-2">分享一下我从零开始备战蓝桥杯的经验，包括学习路线、刷题顺序和备赛资料。希望能帮助到学弟学妹们，少走一些弯路...</p>
+                        <div class="flex justify-between text-xs text-gray-500">
+                            <span>2023-05-10</span>
+                            <div class="flex">
+                                <div class="flex items-center mr-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                    128
+                                </div>
+                                <div class="flex items-center mr-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                                    </svg>
+                                    36
+                                </div>
+                                <div class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                    </svg>
+                                    24
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-item">
+                <div class="flex items-start">
+                    <div class="avatar mr-3 bg-green-100 text-green-600">李</div>
+                    <div class="flex-1">
+                        <div class="flex justify-between mb-1">
+                            <h3 class="font-medium">【组队招募】寻找计算机设计大赛队友</h3>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <span class="text-xs text-gray-500">李四</span>
+                            <span class="mx-1 text-gray-300">|</span>
+                            <span class="text-xs text-gray-500">软工2002</span>
+                            <span class="tag ml-2">组队招募</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3 line-clamp-2">我是软工2002的李四，具有较强的UI设计能力，目前正在寻找有算法和后端开发经验的队友，一起参加计算机设计大赛，项目方向是校园环保APP开发...</p>
+                        <div class="flex justify-between text-xs text-gray-500">
+                            <span>2023-05-08</span>
+                            <div class="flex">
+                                <div class="flex items-center mr-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                    86
+                                </div>
+                                <div class="flex items-center mr-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                                    </svg>
+                                    42
+                                </div>
+                                <div class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                    </svg>
+                                    15
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-item">
+                <div class="flex items-start">
+                    <div class="avatar mr-3 bg-yellow-100 text-yellow-600">王</div>
+                    <div class="flex-1">
+                        <div class="flex justify-between mb-1">
+                            <h3 class="font-medium">ACM-ICPC：如何高效刷题？分享我的刷题心得</h3>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <span class="text-xs text-gray-500">王五</span>
+                            <span class="mx-1 text-gray-300">|</span>
+                            <span class="text-xs text-gray-500">计科1901</span>
+                            <span class="tag ml-2">算法讨论</span>
+                        </div>
+                        <div class="bg-gray-100 p-2 rounded-md mb-3">
+                            <p class="text-sm text-gray-600">分享一些干货：我从大一开始接触算法竞赛，到大三已经参加过3次ACM区域赛，拿过两次金牌。我的刷题方法是...</p>
+                            <div class="grid grid-cols-3 gap-2 mt-2">
+                                <img src="https://via.placeholder.com/100" alt="刷题截图" class="w-full h-20 object-cover rounded-md">
+                                <img src="https://via.placeholder.com/100" alt="比赛照片" class="w-full h-20 object-cover rounded-md">
+                                <img src="https://via.placeholder.com/100" alt="获奖证书" class="w-full h-20 object-cover rounded-md">
+                            </div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-500">
+                            <span>2023-05-05</span>
+                            <div class="flex">
+                                <div class="flex items-center mr-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                    246
+                                </div>
+                                <div class="flex items-center mr-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                                    </svg>
+                                    58
+                                </div>
+                                <div class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                    </svg>
+                                    87
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <a href="new_post.html" class="fab">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+    </a>
+
+    <!-- Bottom Navigation -->
+    <div class="navbar">
+        <a href="index.html" class="nav-item active">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+            <span class="text-xs mt-1">首页</span>
+        </a>
+        <a href="my.html" class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            <span class="text-xs mt-1">我的</span>
+        </a>
+    </div>
+</body>
+</html> 

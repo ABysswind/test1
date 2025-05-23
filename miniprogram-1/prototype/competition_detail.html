@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>竞赛详情 - 计算机学院竞赛推荐</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- TDesign inspired styles -->
+    <style>
+        :root {
+            --td-brand-color: #0052d9;
+            --td-brand-color-light: #d4e3fc;
+            --td-bg-color-container: #fff;
+            --td-bg-color-page: #f5f5f5;
+            --td-text-color-primary: #000000;
+            --td-text-color-secondary: #666666;
+            --td-radius-default: 6px;
+        }
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: var(--td-bg-color-page);
+            color: var(--td-text-color-primary);
+        }
+        .navbar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 56px;
+            background-color: var(--td-bg-color-container);
+            display: flex;
+            box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.05);
+            z-index: 100;
+        }
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--td-text-color-secondary);
+        }
+        .nav-item.active {
+            color: var(--td-brand-color);
+        }
+        .header {
+            height: 44px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            background-color: var(--td-bg-color-container);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        .card {
+            background-color: var(--td-bg-color-container);
+            border-radius: var(--td-radius-default);
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        .tag {
+            display: inline-block;
+            background-color: var(--td-brand-color-light);
+            color: var(--td-brand-color);
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-right: 8px;
+        }
+        .btn-primary {
+            background-color: var(--td-brand-color);
+            color: white;
+            border-radius: var(--td-radius-default);
+            padding: 8px 16px;
+            font-size: 14px;
+            border: none;
+            width: 100%;
+            text-align: center;
+        }
+        .btn-outline {
+            background-color: white;
+            color: var(--td-brand-color);
+            border: 1px solid var(--td-brand-color);
+            border-radius: var(--td-radius-default);
+            padding: 8px 16px;
+            font-size: 14px;
+            width: 100%;
+            text-align: center;
+        }
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 16px 0 12px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .timeline {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .timeline-item {
+            position: relative;
+            padding-left: 24px;
+            padding-bottom: 16px;
+        }
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            background-color: var(--td-brand-color);
+            border-radius: 50%;
+        }
+        .timeline-item:after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 18px;
+            bottom: 0;
+            width: 2px;
+            background-color: #e5e5e5;
+        }
+        .timeline-item:last-child:after {
+            display: none;
+        }
+        .tab {
+            display: flex;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            background-color: var(--td-bg-color-container);
+        }
+        .tab-item {
+            flex: 1;
+            text-align: center;
+            padding: 12px 0;
+            font-size: 14px;
+        }
+        .tab-item.active {
+            color: var(--td-brand-color);
+            border-bottom: 2px solid var(--td-brand-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <a href="javascript:history.back()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+        </a>
+        <h1 class="text-lg font-medium mx-auto">竞赛详情</h1>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+        </svg>
+    </div>
+
+    <!-- Banner Image -->
+    <div class="w-full bg-gray-200 h-48 flex items-center justify-center">
+        <img src="https://via.placeholder.com/600x240" alt="竞赛Banner" class="w-full h-full object-cover">
+    </div>
+
+    <!-- Tabs -->
+    <div class="tab">
+        <div class="tab-item active">详情</div>
+        <div class="tab-item">资料</div>
+        <div class="tab-item">获奖</div>
+        <div class="tab-item">讨论</div>
+    </div>
+
+    <div class="p-4">
+        <!-- Competition Info -->
+        <div class="card">
+            <div class="flex justify-between mb-3">
+                <h2 class="text-xl font-bold">中国大学生计算机设计大赛</h2>
+                <span class="tag">设计类</span>
+            </div>
+            <div class="flex mb-4">
+                <div class="flex items-center text-gray-500 text-sm mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span>2023年度</span>
+                </div>
+                <div class="flex items-center text-gray-500 text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <span>全国性</span>
+                </div>
+            </div>
+            <div class="bg-gray-50 p-3 rounded-md mb-4">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-medium">报名截止</span>
+                    <span class="text-sm text-red-500 font-medium">2023-05-30</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-1.5">
+                    <div class="bg-red-500 h-1.5 rounded-full w-3/4"></div>
+                </div>
+                <div class="mt-1 text-xs text-gray-500">距离截止还有 15 天</div>
+            </div>
+            <p class="text-sm text-gray-600 mb-4">中国大学生计算机设计大赛是全国性的大学生计算机设计比赛，由教育部高等学校计算机类专业教学指导委员会、教育部高等学校软件工程专业教学指导委员会等主办，设有软件应用与开发、微课与教学辅助、物联网应用等类别。参赛作品应充分体现创新性、科学性和实用性。</p>
+            
+            <div class="grid grid-cols-2 gap-3">
+                <button class="btn-primary">立即报名</button>
+                <button class="btn-outline">加入赛程</button>
+            </div>
+        </div>
+
+        <!-- Competition Timeline -->
+        <div class="section-title">赛程安排</div>
+        <div class="card">
+            <ul class="timeline">
+                <li class="timeline-item">
+                    <div class="font-medium">报名阶段</div>
+                    <div class="text-sm text-gray-600">2023-04-01 至 2023-05-30</div>
+                </li>
+                <li class="timeline-item">
+                    <div class="font-medium">初赛阶段</div>
+                    <div class="text-sm text-gray-600">2023-06-01 至 2023-06-30</div>
+                </li>
+                <li class="timeline-item">
+                    <div class="font-medium">复赛阶段</div>
+                    <div class="text-sm text-gray-600">2023-07-05 至 2023-07-20</div>
+                </li>
+                <li class="timeline-item">
+                    <div class="font-medium">决赛阶段</div>
+                    <div class="text-sm text-gray-600">2023-08-01 至 2023-08-15</div>
+                </li>
+                <li class="timeline-item">
+                    <div class="font-medium">颁奖典礼</div>
+                    <div class="text-sm text-gray-600">2023-08-30</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Requirements -->
+        <div class="section-title">参赛要求</div>
+        <div class="card">
+            <div class="mb-3">
+                <div class="font-medium mb-1">参赛对象</div>
+                <p class="text-sm text-gray-600">全国高等学校在校大学生（含高职高专）</p>
+            </div>
+            <div class="mb-3">
+                <div class="font-medium mb-1">团队组成</div>
+                <p class="text-sm text-gray-600">每队参赛人数不超过3人，指导教师不超过2人</p>
+            </div>
+            <div>
+                <div class="font-medium mb-1">作品要求</div>
+                <p class="text-sm text-gray-600">参赛作品应为原创，不得侵犯他人知识产权；参赛作品应能正常运行，具有完整的设计文档。</p>
+            </div>
+        </div>
+
+        <!-- Organizers -->
+        <div class="section-title">主办单位</div>
+        <div class="card">
+            <p class="text-sm text-gray-600">教育部高等学校计算机类专业教学指导委员会</p>
+            <p class="text-sm text-gray-600">教育部高等学校软件工程专业教学指导委员会</p>
+            <p class="text-sm text-gray-600">中国人工智能学会</p>
+            <p class="text-sm text-gray-600">中国电子学会</p>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="navbar">
+        <a href="index.html" class="nav-item active">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+            <span class="text-xs mt-1">首页</span>
+        </a>
+        <a href="my.html" class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            <span class="text-xs mt-1">我的</span>
+        </a>
+    </div>
+</body>
+</html> 
